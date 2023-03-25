@@ -24,10 +24,6 @@ int main()
     fprintf(stdout, "%d\n",harr[0]);
 
     func(size, arr1, arr2, arr3);
-
-    int* harr2 = new int [size];
-    cudaMemcpy(harr2, arr3, size*sizeof(int), cudaMemcpyDeviceToHost);
-    fprintf(stdout, "%d\n",harr2[0]);
     cudaError_t err = cudaGetLastError();
     if (cudaSuccess != err)
         fprintf(stderr, "Cuda error: %s.\n", cudaGetErrorString(err));
