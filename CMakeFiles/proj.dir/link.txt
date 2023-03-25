@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/proj.dir/src/cudafile.cu.o CMakeFiles/proj.dir/src/main.cpp.o  -o proj   -L/usr/local/cuda-12.1/lib64  -L/usr/local/cuda-12.1/targets/x86_64-linux/lib/stubs  -L/usr/local/cuda-12.1/targets/x86_64-linux/lib  -lcudadevrt -lcudart_static -lrt -lpthread -ldl 

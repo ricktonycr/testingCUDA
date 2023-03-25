@@ -1,0 +1,3 @@
+/home/rcruz/maestria/vision/testCUDA/CMakeFiles/rebuild_cache.dir
+/home/rcruz/maestria/vision/testCUDA/CMakeFiles/edit_cache.dir
+/home/rcruz/maestria/vision/testCUDA/CMakeFiles/proj.dir
