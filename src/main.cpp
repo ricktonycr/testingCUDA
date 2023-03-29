@@ -1,34 +1,46 @@
 #include<thrust/host_vector.h>
 #include<thrust/device_vector.h>
 #include<thrust/device_ptr.h>
+#include <gtkmm.h>
 
-void func(int size, int* a1, int* a2, int* a3);
-void FillWithValue(int* arr, int size, int val);
+#define N 1024
 
-int main()
-{
+void add(int* a, int* b, int* c);
 
-    int size=1000;
-    int *arr1, *arr2, *arr3;
+int main(int argc, char *argv[]){
+    int a[N], b[N], c[N];
+    int *dev_a, *dev_b, *dev_c;
+
+    cudaMalloc( (void**)&dev_a, N * sizeof(int) );
+    cudaMalloc( (void**)&dev_b, N * sizeof(int) );
+    cudaMalloc( (void**)&dev_c, N * sizeof(int) );
+
+    for (int i = 0; i < N; i++){
+        a[i] = -i;
+        b[i] =  i * i;
+    }
+
+    cudaMemcpy(dev_a, a, N * sizeof(int), cudaMemcpyHostToDevice);
+    cudaMemcpy(dev_b, b, N * sizeof(int), cudaMemcpyHostToDevice);
+
+    add( dev_a, dev_b, dev_c );
+
+    cudaMemcpy(c, dev_c, N * sizeof(int), cudaMemcpyDeviceToHost);
+
+    for (int i = 0; i < N; i++){
+        printf( "%d + %d = %d\n", a[i], b[i], c[i] );
+    }
     
-    cudaMalloc((void**)&arr1, size * sizeof(int));
-    FillWithValue(arr1,size,1);
+    cudaFree( dev_a );
+    cudaFree( dev_b );
+    cudaFree( dev_c );
 
-    cudaMalloc((void**)&arr2, size * sizeof(int));
-    FillWithValue(arr2,size,2);
+    auto app =
+    Gtk::Application::create(argc, argv,
+      "org.gtkmm.examples.base");
 
-    cudaMalloc((void**)&arr3, size * sizeof(int));
+    Gtk::Window window;
+    window.set_default_size(200, 200);
 
-    int* harr = new int [size];
-    cudaMemcpy(harr,arr1,size*sizeof(int),cudaMemcpyDeviceToHost);
-    fprintf(stdout, "%d\n",harr[0]);
-
-    func(size, arr1, arr2, arr3);
-    cudaError_t err = cudaGetLastError();
-    if (cudaSuccess != err)
-        fprintf(stderr, "Cuda error: %s.\n", cudaGetErrorString(err));
-    
-
-    return 1;
-
+    return app->run(window);
 }
