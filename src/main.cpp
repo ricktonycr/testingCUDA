@@ -1,7 +1,8 @@
 #include<thrust/host_vector.h>
 #include<thrust/device_vector.h>
 #include<thrust/device_ptr.h>
-#include <gtkmm.h>
+#include "examplewindow.h"
+#include <gtkmm/application.h>
 
 #define N 1024
 
@@ -35,12 +36,10 @@ int main(int argc, char *argv[]){
     cudaFree( dev_b );
     cudaFree( dev_c );
 
-    auto app =
-    Gtk::Application::create(argc, argv,
-      "org.gtkmm.examples.base");
+    auto app = Gtk::Application::create(argc, argv, "org.gtkmm.example");
 
-    Gtk::Window window;
-    window.set_default_size(200, 200);
+    ExampleWindow window;
 
+    //Shows the window and returns when it is closed.
     return app->run(window);
 }

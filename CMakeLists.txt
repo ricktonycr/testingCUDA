@@ -22,7 +22,8 @@ include_directories(
 ADD_EXECUTABLE(
 proj 
 src/cudafile.cu
-src/main.cpp)
+src/main.cpp
+src/examplewindow.cpp)
 
 target_link_libraries(proj 
     ${GTKMM_LIBRARIES}  )
